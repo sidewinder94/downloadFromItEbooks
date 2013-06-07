@@ -53,8 +53,8 @@ if __name__ == '__main__':
             myparser.parse(page_source)
 
             #On effectue le tÃ©lÃ©chargement
-            print("TÃ©lÃ©chargement du livre : %S", file_title)
-            urllib.urlretrieve (myparser.getHyperlinks[0], file_title + ".pdf")
+            print("Téléchargement du livre : %S", file_title)
+            urllib.urlretrieve (myparser.getHyperlinks()[0], file_title + ".pdf")
 
             #Upload chez Mega
             file = m.upload(file_title + ".pdf")
