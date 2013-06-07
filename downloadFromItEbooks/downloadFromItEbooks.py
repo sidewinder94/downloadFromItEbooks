@@ -1,6 +1,11 @@
+#!/usr/bin/env python
+# -*- coding: iso-8859-1 -*-
+
 import os
+import urllib
 import urllib2
 import sgmllib
+from mechanize import Browser
 
 
 class MyParser(sgmllib.SGMLParser):
@@ -18,10 +23,12 @@ class MyParser(sgmllib.SGMLParser):
         for name, value in attributes:
             if name == "href":
                 tempHyperlink = value
-            if name == "dl":
+            if value == "dl":
                 tempDl = True
             if (tempDl):
-                self.hyperlinks.append(tempHyperlink)
+                if (tempHyperlink != ""):
+                    self.hyperlinks.append(tempHyperlink)
+                    tempDl = False
 
     def getHyperlinks(self):
         return self.hyperlinks
@@ -30,9 +37,20 @@ if __name__ == '__main__':
     try:
         for i in [str(i) for i in range(1,2300)]:
             #print("http://it-ebooks.info/book/" + i)
+
+            #On récupère le titre du livre
+            br = Browser()
+            br.open("http://it-ebooks.info/book/" + "1")
+            file_title = br.title().split(" - ")[0]
+
+            #On récupère le lien de téléchargement
             response = urllib2.urlopen("http://it-ebooks.info/book/" + "1")
             page_source = response.read()
             myparser = MyParser()
             myparser.parse(page_source)
+
+            #On effectue le téléchargement
+            print("Téléchargement du livre : %S", file_title)
+            urllib.urlretrieve (myparser.getHyperlinks[0], file_title + ".pdf")
     except Exception, e:
         print(e)
