@@ -39,7 +39,7 @@ if __name__ == '__main__':
         mega = Mega()
         m = mega.login("mail", "password")
         for i in [str(i) for i in range(1,2300)]:
-            #print("http://it-ebooks.info/book/" + i)
+            print("http://it-ebooks.info/book/" + i)
 
             #On récupère le titre du livre
             br = Browser()
@@ -54,7 +54,8 @@ if __name__ == '__main__':
 
             #On effectue le tÃ©lÃ©chargement
             print("Téléchargement du livre : %S", file_title)
-            urllib.urlretrieve (myparser.getHyperlinks()[0], file_title + ".pdf")
+            urllib.urlretrieve ("http://it-ebooks.info/book/" + i + 
+                                myparser.getHyperlinks()[0], file_title + ".pdf")
 
             #Upload chez Mega
             file = m.upload(file_title + ".pdf")
