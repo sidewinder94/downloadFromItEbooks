@@ -53,12 +53,17 @@ if __name__ == '__main__':
             myparser.parse(page_source)
 
             #On effectue le téléchargement
-            print("Téléchargement du livre : %S", file_title)
+            print("Téléchargement du livre : " + file_title)
             urllib.urlretrieve ("http://it-ebooks.info" + myparser.getHyperlinks()[0], 
                                 file_title + ".pdf")
 
             #Upload chez Mega
-            file = m.upload("Books/" +file_title + ".pdf")
+            file = m.upload(file_title + ".pdf",
+                            m.find("Books"))
             print("Uploaded : " + file_title + ".pdf" + " Link : " + m.get_upload_link(file))
+
+            #On supprime le fichier local du serveur
+            os.remove(file_title + ".pdf")
+            print("Deleted : " + file_title + ".pdf")
     except Exception, e:
         print(e)
