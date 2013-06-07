@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import time
 import urllib
 import urllib2
 import sgmllib
@@ -65,5 +66,8 @@ if __name__ == '__main__':
             #On supprime le fichier local du serveur
             os.remove(file_title + ".pdf")
             print("Deleted : " + file_title + ".pdf")
+
+            #On attends 10 secondes avant le prochain livre
+            time.sleep(10)
     except Exception, e:
         print(e)
