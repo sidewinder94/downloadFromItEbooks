@@ -39,16 +39,16 @@ if __name__ == '__main__':
     try:
         mega = Mega()
         m = mega.login("mail", "password")
-        for i in [str(i) for i in range(1,2300)]:
-            print("http://it-ebooks.info/book/" + i)
+        for i in range(1,2300):
+            print("http://it-ebooks.info/book/" + str(i))
 
             #On récupère le titre du livre
             br = Browser()
-            br.open("http://it-ebooks.info/book/" + i)
+            br.open("http://it-ebooks.info/book/" + str(i))
             file_title = br.title().split(" - ")[0]
 
             #On récupère le lien de téléchargement
-            response = urllib2.urlopen("http://it-ebooks.info/book/" + i)
+            response = urllib2.urlopen("http://it-ebooks.info/book/" + str(i))
             page_source = response.read()
             myparser = MyParser()
             myparser.parse(page_source)
@@ -94,6 +94,6 @@ if __name__ == '__main__':
             print("Deleted : " + file_title + ".pdf")
 
             #On attends 10 secondes avant le prochain livre
-            time.sleep(10)
+            time.sleep(5)
     except Exception, e:
         print(e)
