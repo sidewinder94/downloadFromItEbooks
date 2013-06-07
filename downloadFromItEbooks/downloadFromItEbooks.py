@@ -6,6 +6,7 @@ import time
 import urllib
 import urllib2
 import sgmllib
+import sys
 from mechanize import Browser
 from mega import Mega
 
@@ -36,9 +37,11 @@ class MyParser(sgmllib.SGMLParser):
         return self.hyperlinks
 
 if __name__ == '__main__':
+    user = sys.argv[1]
+    password = sys.argv[2]
     try:
         mega = Mega()
-        m = mega.login("mail", "password")
+        m = mega.login(user, password)
         for i in range(1,2300):
             print("http://it-ebooks.info/book/" + str(i))
 
