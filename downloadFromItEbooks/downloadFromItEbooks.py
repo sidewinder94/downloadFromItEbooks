@@ -1,11 +1,12 @@
-#!/usr/bin/env python
-# -*- coding: iso-8859-1 -*-
+ï»¿#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 import os
 import urllib
 import urllib2
 import sgmllib
 from mechanize import Browser
+from mega import Mega
 
 
 class MyParser(sgmllib.SGMLParser):
@@ -35,22 +36,28 @@ class MyParser(sgmllib.SGMLParser):
 
 if __name__ == '__main__':
     try:
+        mega = Mega()
+        m = mega.login("mail", "password")
         for i in [str(i) for i in range(1,2300)]:
             #print("http://it-ebooks.info/book/" + i)
 
-            #On récupère le titre du livre
+            #On rÃ©cupÃ¨re le titre du livre
             br = Browser()
-            br.open("http://it-ebooks.info/book/" + "1")
+            br.open("http://it-ebooks.info/book/" + i)
             file_title = br.title().split(" - ")[0]
 
-            #On récupère le lien de téléchargement
-            response = urllib2.urlopen("http://it-ebooks.info/book/" + "1")
+            #On rÃ©cupÃ¨re le lien de tÃ©lÃ©chargement
+            response = urllib2.urlopen("http://it-ebooks.info/book/" + i)
             page_source = response.read()
             myparser = MyParser()
             myparser.parse(page_source)
 
-            #On effectue le téléchargement
-            print("Téléchargement du livre : %S", file_title)
+            #On effectue le tÃƒÂ©lÃƒÂ©chargement
+            print("TÃƒÂ©lÃƒÂ©chargement du livre : %S", file_title)
             urllib.urlretrieve (myparser.getHyperlinks[0], file_title + ".pdf")
+
+            #Upload chez Mega
+            file = m.upload(file_title + ".pdf")
+            print("Uploaded : " + file_title + ".pdf" + " Link : " + m.get_upload_link(file))
     except Exception, e:
         print(e)
