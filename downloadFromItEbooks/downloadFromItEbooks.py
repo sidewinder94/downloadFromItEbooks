@@ -41,8 +41,8 @@ if __name__ == '__main__':
     password = sys.argv[2]
     try:
         mega = Mega()
-        m = mega.login(user, password)
         for i in range(1,2300):
+            m = mega.login(user, password)
             print("http://it-ebooks.info/book/" + str(i))
 
             #On récupère le titre du livre
@@ -84,7 +84,7 @@ if __name__ == '__main__':
                 print status,
 
             f.close()
-
+            print "Downloaded : " + status + "of " + file_name
 
 
             #Upload chez Mega
@@ -98,5 +98,6 @@ if __name__ == '__main__':
 
             #On attends 10 secondes avant le prochain livre
             time.sleep(5)
+            m = null
     except Exception, e:
         print(e)
