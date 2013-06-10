@@ -61,6 +61,10 @@ if __name__ == '__main__':
     user = sys.argv[1]
     password = sys.argv[2] 
 	start = sys.argv[3]
+	try:
+		start = int(start)
+	except:
+		start = 1
 	for i in range(start,2300):
 		try:
 			print("http://it-ebooks.info/book/" + str(i))
