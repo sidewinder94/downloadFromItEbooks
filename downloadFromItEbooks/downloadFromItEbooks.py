@@ -36,13 +36,27 @@ class MyParser(sgmllib.SGMLParser):
     def getHyperlinks(self):
         return self.hyperlinks
 
+def megaUpload(self, userName, password, file, destination, error=0):
+    if error <> 0:
+        print "Upload try n°" + str(error)
+        print "Failed will try again in " + str(error*5) + " seconds"
+    try:
+        #Si on en est pas au premier essai on att 5 sec * le nombre d'essais
+        time.sleep(5*error)
+        mega = Mega()
+        m = mega.login(userName, password)
+        file = m.upload(file, destination)
+        m = None
+        mega = None
+    except:
+        megaUpload(self, userName, password, file, destination, error+1)
+
 if __name__ == '__main__':
     user = sys.argv[1]
     password = sys.argv[2]
     try:
-        mega = Mega()
         for i in range(1,2300):
-            m = mega.login(user, password)
+           
             print("http://it-ebooks.info/book/" + str(i))
 
             #On récupère le titre du livre
@@ -86,16 +100,11 @@ if __name__ == '__main__':
             f.close()
 
             #Upload chez Mega
-            file = m.upload(file_title + ".pdf",
-                            m.find("Books"))
+            megaUpload(self,user,password,file_title + ".pdf", m.find("Books"))
             print("Uploaded : " + file_title + ".pdf" + " Link : " + m.get_upload_link(file))
 
             #On supprime le fichier local du serveur
             os.remove(file_title + ".pdf")
             print("Deleted : " + file_title + ".pdf")
-
-            #On attends 10 secondes avant le prochain livre
-            time.sleep(5)
-            m = None
     except Exception, e:
         print(e)
