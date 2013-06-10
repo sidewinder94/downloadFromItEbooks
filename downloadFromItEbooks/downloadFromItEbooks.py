@@ -98,6 +98,6 @@ if __name__ == '__main__':
 
             #On attends 10 secondes avant le prochain livre
             time.sleep(5)
-            m = null
+            m = None
     except Exception, e:
         print(e)
