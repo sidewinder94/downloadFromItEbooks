@@ -45,7 +45,7 @@ def megaUpload(userName, password, file, destination, error=0):
         time.sleep(5*error)
         mega = Mega()
         m = mega.login(userName, password)
-        file = m.upload(file, destination)
+        file = m.upload(file, m.find(destination))
         return m.get_upload_link(file)
     except:
         megaUpload(userName, password, file, destination, error+1)
@@ -101,7 +101,7 @@ if __name__ == '__main__':
             #Upload chez Mega
             
             print("Uploaded : " + file_title + ".pdf" + " Link : " + 
-                  megaUpload(user,password,file_title + ".pdf", m.find("Books")))
+                  megaUpload(user,password,file_title + ".pdf","Books"))
 
             #On supprime le fichier local du serveur
             os.remove(file_title + ".pdf")
