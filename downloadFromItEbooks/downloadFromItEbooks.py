@@ -84,8 +84,6 @@ if __name__ == '__main__':
                 print status,
 
             f.close()
-            print "Downloaded : " + status + "of " + file_name
-
 
             #Upload chez Mega
             file = m.upload(file_title + ".pdf",
