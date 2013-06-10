@@ -60,7 +60,8 @@ def megaUpload(userName, password, fileName, destination, error=0):
 if __name__ == '__main__':
     user = sys.argv[1]
     password = sys.argv[2] 
-	for i in range(1,2300):
+	start = sys.argv[3]
+	for i in range(start,2300):
 		try:
 			print("http://it-ebooks.info/book/" + str(i))
 
