@@ -48,7 +48,12 @@ def megaUpload(userName, password, file, destination, error=0):
         file = m.upload(file, m.find(destination))
         return m.get_upload_link(file)
     except:
-        megaUpload(userName, password, file, destination, error+1)
+        mega = Mega()
+        m = mega.login(userName, password)
+        if (m.find(file) <> None):
+            return m.get_upload_link(file)
+        else:
+            megaUpload(userName, password, file, destination, error+1)
 
 if __name__ == '__main__':
     user = sys.argv[1]
