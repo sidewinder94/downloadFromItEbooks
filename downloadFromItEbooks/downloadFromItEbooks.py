@@ -36,7 +36,7 @@ class MyParser(sgmllib.SGMLParser):
     def getHyperlinks(self):
         return self.hyperlinks
 
-def megaUpload(userName, password, file, destination, error=0):
+def megaUpload(userName, password, fileName, destination, error=0):
     if error <> 0:
         print "Upload try n°" + str(error)
         print "Failed will try again in " + str(error*5) + " seconds"
@@ -45,16 +45,17 @@ def megaUpload(userName, password, file, destination, error=0):
         time.sleep(5*error)
         mega = Mega()
         m = mega.login(userName, password)
-        file = m.upload(file, m.find(destination))
+        file = m.upload(fileName, m.find(destination))
         return m.get_upload_link(file)
     except Exception, e:
         mega = Mega()
         m = mega.login(userName, password)
-        if (m.find(file) <> None):
+        file = m.find(fileName)
+        if (file <> None):
             return m.get_upload_link(file)
         else:
             print "error : " , e
-            megaUpload(userName, password, file, destination, error+1)
+            megaUpload(userName, password, fileName, destination, error+1)
 
 if __name__ == '__main__':
     user = sys.argv[1]
