@@ -89,7 +89,7 @@ if __name__ == '__main__':
 
             #Upload chez Mega
             file = m.upload(file_title + ".pdf",
-                            m.find('Books')[1])
+                            m.find("Books"))
             print("Uploaded : " + file_title + ".pdf" + " Link : " + m.get_upload_link(file))
 
             #On supprime le fichier local du serveur
