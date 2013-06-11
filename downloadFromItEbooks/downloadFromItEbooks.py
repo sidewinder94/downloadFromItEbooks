@@ -45,7 +45,7 @@ def megaUpload(userName, password, fileName, destination, error=0):
         time.sleep(5*error)
         mega = Mega()
         m = mega.login(userName, password)
-        file = m.upload(fileName, m.find(destination))
+        file = m.upload(fileName, m.find(destination)[0])
         return m.get_upload_link(file)
     except Exception, e:
         mega = Mega()
